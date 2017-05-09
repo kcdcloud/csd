@@ -11,15 +11,18 @@
 ##   Connect to the container at DOCKER_IP:3000
 ##     replacing DOCKER_IP for the IP of your active docker host
 
-FROM gcr.io/stacksmith-images/ubuntu:14.04-r9
+FROM gcr.io/bitnami-containers/minideb-extras:jessie-r14-buildpack
 
 MAINTAINER Bitnami <containers@bitnami.com>
 
-ENV STACKSMITH_STACK_ID="6tnai2u" \
+ENV STACKSMITH_STACK_ID="9xxbwvp" \
     STACKSMITH_STACK_NAME="Node.js for kcdcloud/csd" \
     STACKSMITH_STACK_PRIVATE="1"
 
-RUN bitnami-pkg install node-6.4.0-0 --checksum 41d5a7b17ac1f175c02faef28d44eae0d158890d4fa9893ab24b5cc5f551486f
+# Install required system packages
+RUN install_packages libc6 libssl1.0.0 libncurses5 libtinfo5 libsqlite3-0 zlib1g libbz2-1.0 libreadline6 libstdc++6 libgcc1 ghostscript imagemagick libmysqlclient18
+
+RUN bitnami-pkg install node-7.10.0-0 --checksum 7209e62e60335308287cba38bc18fb34245d41b86bc7ffd3ad26413f186c529b
 
 ENV PATH=/opt/bitnami/node/bin:/opt/bitnami/python/bin:$PATH \
     NODE_PATH=/opt/bitnami/node/lib/node_modules
